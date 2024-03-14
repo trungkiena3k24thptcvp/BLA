@@ -7,58 +7,44 @@ string rtrim(const string &);
 vector<string> split(const string &);
 
 /*
- * Complete the 'balancedSums' function below.
+ * Complete the 'kangaroo' function below.
  *
  * The function is expected to return a STRING.
- * The function accepts INTEGER_ARRAY arr as parameter.
+ * The function accepts following parameters:
+ *  1. INTEGER x1
+ *  2. INTEGER v1
+ *  3. INTEGER x2
+ *  4. INTEGER v2
  */
 
-string balancedSums(vector<int> arr) {
-     int n = arr.size();
-     double sum = 0;
-     for (int i = 0; i < n; i++) {
-         sum += arr[i];
-     }
-     double val = 0;
-     for (int i = 0; i < n; i++) {
-         if (val == (sum - arr[i]) / 2) return "YES";
-         val += arr[i];
-     }
-     return "NO";
+string kangaroo(int x1, int v1, int x2, int v2) {
+    if ((x1 < x2 && v1 < v2) || (x1 > x2 && v1 > v2) || (v1 == v2 && x1 != x2)) return "NO";
+    int val1 = abs(x2 - x1);
+    int val2 = abs(v2 - v1);
+    if (val1 % val2 == 0 || val2 % val1 == 0) return "YES";
+    else return "NO";
 }
 
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
 
-    string T_temp;
-    getline(cin, T_temp);
+    string first_multiple_input_temp;
+    getline(cin, first_multiple_input_temp);
 
-    int T = stoi(ltrim(rtrim(T_temp)));
+    vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
 
-    for (int T_itr = 0; T_itr < T; T_itr++) {
-        string n_temp;
-        getline(cin, n_temp);
+    int x1 = stoi(first_multiple_input[0]);
 
-        int n = stoi(ltrim(rtrim(n_temp)));
+    int v1 = stoi(first_multiple_input[1]);
 
-        string arr_temp_temp;
-        getline(cin, arr_temp_temp);
+    int x2 = stoi(first_multiple_input[2]);
 
-        vector<string> arr_temp = split(rtrim(arr_temp_temp));
+    int v2 = stoi(first_multiple_input[3]);
 
-        vector<int> arr(n);
+    string result = kangaroo(x1, v1, x2, v2);
 
-        for (int i = 0; i < n; i++) {
-            int arr_item = stoi(arr_temp[i]);
-
-            arr[i] = arr_item;
-        }
-
-        string result = balancedSums(arr);
-
-        fout << result << "\n";
-    }
+    fout << result << "\n";
 
     fout.close();
 
